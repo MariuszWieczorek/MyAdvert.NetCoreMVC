@@ -10,24 +10,24 @@ namespace MyAdvert.Core.Models.Domains
     {
         public int Id { get; set; }
         [MaxLength(50)]
-        [Required(ErrorMessage = "Pole tytułjest wymagane.")]
+        [Required(ErrorMessage = "Pole tytuł jest wymagane.")]
         [Display(Name = "Tytuł")]
         public string Title { get; set; }
         [MaxLength(250)]
         [Required(ErrorMessage = "Pole opis jest wymagane.")]
         [Display(Name = "Opis")]
         public string Description { get; set; }
+        [Display(Name = "Wyświetlane Od")]
+        public DateTime? StartDate { get; set; }
+        [Display(Name = "Wyświetlane Do")]
+        public DateTime? StopDate { get; set; }
+        [Display(Name = "Aktywne")]
+        public bool IsActive { get; set; }
         [Required(ErrorMessage = "Pole kategoria jest wymagane.")]
         [Display(Name = "Kategoria")]
         public int CategoryId { get; set; }
-        [Display(Name = "Termin")]
-        public DateTime? Term { get; set; }
-        [Display(Name = "Zrealizowane")]
-        public bool IsExecuted { get; set; }
         public int UserId { get; set; }
-
         public Category Category { get; set; }
         public ApplicationUser User { get; set; }
-
     }
 }
