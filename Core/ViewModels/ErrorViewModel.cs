@@ -1,6 +1,6 @@
 using System;
 
-namespace MyAdvert.Core.ViewModels
+namespace MyAdvert.Models
 {
     public class ErrorViewModel
     {

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyAdvert.Data;
+using MyAdvert.Persistence;
 using System;
 
 namespace MyAdvert.Data.Migrations
