@@ -7,9 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyAdvert.Core;
 using MyAdvert.Core.Models.Domains;
+using MyAdvert.Core.Services;
 using MyAdvert.Data;
 using MyAdvert.Persistence;
+using MyAdvert.Persistence.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,13 @@ namespace MyAdvert
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // dla ka¿dego request'a jedna instancja tej klasy
+            services.AddScoped<IAdvertService, AdvertService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -65,7 +75,7 @@ namespace MyAdvert
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Advert}/{action=Adverts}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

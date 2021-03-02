@@ -26,7 +26,7 @@ namespace MyAdvert.Core.Models.Domains
         [Required(ErrorMessage = "Pole kategoria jest wymagane.")]
         [Display(Name = "Kategoria")]
         public int CategoryId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public Category Category { get; set; }
         public ApplicationUser User { get; set; }
     }
