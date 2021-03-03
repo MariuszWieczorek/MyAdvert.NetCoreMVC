@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyAdvert.Core;
 using MyAdvert.Core.Models;
+using MyAdvert.Core.Services;
 using MyAdvert.Core.ViewModels;
 using MyAdvert.Persistence;
 using MyAdvert.Persistence.Extensions;
@@ -16,11 +18,13 @@ namespace MyAdvert.Controllers
     public class AdvertController : Controller
     {
 
-        private UnitOfWork _unitOfWork;
+        private readonly IAdvertService _advertService;
+        private readonly ICategoryService _categoryService;
 
-        public AdvertController(ApplicationDbContext context)
+        public AdvertController(IAdvertService advertService, ICategoryService categoryService)
         {
-            _unitOfWork = new UnitOfWork(context);           
+            _advertService = advertService;
+            _categoryService = categoryService;
         }
 
 
@@ -31,8 +35,8 @@ namespace MyAdvert.Controllers
             var vm = new AdvertViewModel()
             {
                 FilterAdverts = new FilterAdverts(),
-                Categories = _unitOfWork.Category.GetCategories(),
-                Adverts = _unitOfWork.Advert.GetAdverts(new FilterAdverts())
+                Categories = _categoryService.GetCategories(),
+                Adverts =  _advertService.GetAdverts(new FilterAdverts())
             };
 
             return View(vm);
