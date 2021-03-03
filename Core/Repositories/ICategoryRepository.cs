@@ -9,8 +9,8 @@ namespace MyAdvert.Core.Repositories
     public interface ICategoryRepository
     {
         IEnumerable<Category> GetCategories();
-        void AddCategory(Category category);
         Category GetCategory(int id);
+        void AddCategory(Category category);
         void UpdateCategory(Category category);
         void DeleteCategory(int id);
 

@@ -13,11 +13,11 @@ namespace MyAdvert.Persistence
         // readonly przy polu oznacza, że jego wartość
         // możemy zmienić tylko w konstruktorze
         private readonly IApplicationDbContext _context;
-        public UnitOfWork(IApplicationDbContext context)
+        public UnitOfWork(IApplicationDbContext context, IAdvertRepository advert, ICategoryRepository category)
         {
             _context = context;
-            Advert = new AdvertRepository(context);
-            Category = new CategoryRepository(context);
+            Advert = advert;        // new AdvertRepository(context);
+            Category = category;    // new CategoryRepository(context);
         }
 
         // obiekty repozytoryjne 

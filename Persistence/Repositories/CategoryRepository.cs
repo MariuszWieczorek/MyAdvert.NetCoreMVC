@@ -1,4 +1,5 @@
-﻿using MyAdvert.Core.Models.Domains;
+﻿using MyAdvert.Core;
+using MyAdvert.Core.Models.Domains;
 using MyAdvert.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ namespace MyAdvert.Persistence.Repositories
 {
     public class CategoryRepository: ICategoryRepository
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryRepository(ApplicationDbContext context)
+        private readonly IApplicationDbContext _context;
+        public CategoryRepository(IApplicationDbContext context)
         {
             _context = context;
         }

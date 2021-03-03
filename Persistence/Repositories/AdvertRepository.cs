@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyAdvert.Core;
 using MyAdvert.Core.Models;
 using MyAdvert.Core.Models.Domains;
 using MyAdvert.Core.Repositories;
@@ -12,24 +13,12 @@ namespace MyAdvert.Persistence.Repositories
     public class AdvertRepository : IAdvertRepository
     {
 
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         
-        public AdvertRepository(ApplicationDbContext context)
+        public AdvertRepository(IApplicationDbContext context)
         {
             _context = context;
         }
-
-        public void AddAdvert(Advert advert)
-        {
-            _context.Adverts.Add(advert);
-        }
-
-        public void DeleteAdvert(int id)
-        {
-            var advertToDelete = _context.Adverts.Single(x => x.Id == id);
-            _context.Adverts.Remove(advertToDelete);
-        }
-
         public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks)
         {
             var adverts = _context.Adverts
@@ -51,15 +40,26 @@ namespace MyAdvert.Persistence.Repositories
             return advert;
         }
 
-        public void UpdateAdvert(Advert advert)
+        public void AddAdvert(Advert advert)
         {
-            var advertToUpdate = _context.Adverts.Single(x => x.Id == advert.Id);
+            _context.Adverts.Add(advert);
+        }
+
+        public void UpdateAdvert(Advert advert, string userId)
+        {
+            var advertToUpdate = _context.Adverts.Single(x => x.Id == advert.Id && x.UserId == userId);
             advertToUpdate.Title = advert.Title;
             advertToUpdate.Description = advert.Description;
             advertToUpdate.StartDate = advert.StartDate;
             advertToUpdate.StopDate = advert.StopDate;
             advertToUpdate.IsActive = advert.IsActive;
             advertToUpdate.CategoryId = advert.CategoryId;
+        }
+
+        public void DeleteAdvert(int id, string userId)
+        {
+            var advertToDelete = _context.Adverts.Single(x => x.Id == id && x.UserId == userId);
+            _context.Adverts.Remove(advertToDelete);
         }
     }
 }

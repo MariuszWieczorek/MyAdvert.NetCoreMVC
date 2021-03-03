@@ -12,8 +12,8 @@ namespace MyAdvert.Core.Repositories
         IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks);
         Advert GetAdvert(int id);
         void AddAdvert(Advert advert);
-        void UpdateAdvert(Advert advert);
-        void DeleteAdvert(int id);
+        void UpdateAdvert(Advert advert, string userId);
+        void DeleteAdvert(int id, string userId);
     }
 }
 

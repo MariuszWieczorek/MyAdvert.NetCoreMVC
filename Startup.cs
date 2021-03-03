@@ -9,9 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyAdvert.Core;
 using MyAdvert.Core.Models.Domains;
+using MyAdvert.Core.Repositories;
 using MyAdvert.Core.Services;
 using MyAdvert.Data;
 using MyAdvert.Persistence;
+using MyAdvert.Persistence.Repositories;
 using MyAdvert.Persistence.Services;
 using System;
 using System.Collections.Generic;
@@ -38,6 +40,8 @@ namespace MyAdvert
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAdvertRepository, AdvertRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

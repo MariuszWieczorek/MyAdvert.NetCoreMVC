@@ -1,5 +1,6 @@
 ﻿using MyAdvert.Core;
 using MyAdvert.Core.Models.Domains;
+using MyAdvert.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyAdvert.Persistence.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
         public CategoryService(IUnitOfWork unitOfWork)
@@ -21,13 +22,13 @@ namespace MyAdvert.Persistence.Services
             _unitOfWork.Complete();
         }
 
-        public void DeleteCategory(int id, string userId)
+        public void DeleteCategory(int id)
         {
             _unitOfWork.Category.DeleteCategory(id);
             _unitOfWork.Complete();
         }
 
-        public IEnumerable<Category> GetCategories(string userId)
+        public IEnumerable<Category> GetCategories()
         {
             return _unitOfWork.Category.GetCategories();
         }
@@ -38,7 +39,7 @@ namespace MyAdvert.Persistence.Services
             _unitOfWork.Complete();
         }
 
-        public Category GetCategory(int id, string userId)
+        public Category GetCategory(int id)
         {
             return _unitOfWork.Category.GetCategory(id);
         }

@@ -22,29 +22,29 @@ namespace MyAdvert.Persistence.Services
             return _unitOfWork.Advert.GetAdverts(filterAdverts);
         }
 
-        public Advert Get(int id)
+        public Advert GetAdvert(int id)
         {
             return _unitOfWork.Advert.GetAdvert(id);
         }
 
-        public void Add(Advert advert)
+        public void AddAdvert(Advert advert)
         {
             _unitOfWork.Advert.AddAdvert(advert);
             _unitOfWork.Complete();
         }
 
-        public void Update(Advert advert)
+        public void UpdateAdvert(Advert advert, string userId)
         {
-            _unitOfWork.Advert.UpdateAdvert(advert);
+            _unitOfWork.Advert.UpdateAdvert(advert, userId);
             // metoda wysyłająca maila
             // ...
             // dodatkowa modyfikacja danych
             _unitOfWork.Complete();
         }
 
-         public void Delete(int id, string userId)
+         public void DeleteAdvert(int id, string userId)
         {
-            _unitOfWork.Advert.DeleteAdvert(id);
+            _unitOfWork.Advert.DeleteAdvert(id,userId);
             _unitOfWork.Complete();
         }
     }
