@@ -61,7 +61,7 @@ namespace MyAdvert.Controllers
             var userId = User.GetUserId();
 
             var advert = id == 0 ?
-                new Advert { Id = 0, UserId = userId, StartDate = DateTime.Now } :
+                new Advert { Id = 0, UserId = userId, StartDate = DateTime.Now, IsActive = true } :
                 _advertService.GetAdvert(id);
 
             var vm = new AdvertViewModel()

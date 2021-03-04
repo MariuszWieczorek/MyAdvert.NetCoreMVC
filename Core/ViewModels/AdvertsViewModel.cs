@@ -12,6 +12,6 @@ namespace MyAdvert.Core.ViewModels
         public IEnumerable<Advert> Adverts { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public FilterAdverts FilterAdverts { get; set; }
-
+        public PagingInfo PagingInfo { get; set; }
     }
 }
