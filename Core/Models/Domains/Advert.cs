@@ -21,6 +21,15 @@ namespace MyAdvert.Core.Models.Domains
         public DateTime? StartDate { get; set; }
         [Display(Name = "Wyświetlane Do")]
         public DateTime? StopDate { get; set; }
+
+        [Required(ErrorMessage = "Pole wartość est wymagane.")]
+        [Display(Name = "Wartość")]
+        public decimal Value { get; set; }
+
+        [MaxLength(250)]
+        [Display(Name = "Obrazek")]
+        public string Picture { get; set; }
+
         [Display(Name = "Aktywne")]
         public bool IsActive { get; set; }
         [Required(ErrorMessage = "Pole kategoria jest wymagane.")]

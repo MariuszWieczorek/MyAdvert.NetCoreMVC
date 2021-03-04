@@ -1,0 +1,117 @@
+﻿@model MyAdvert.Core.ViewModels.AdvertViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1>@Model.Heading</h1>
+
+@using (Html.BeginForm("Advert", "Advert"))
+{
+    <p class="alert alert-info mt-4 mb-4">
+        Pola Tytuł, opis i kategoria są <strong>wymagane</strong>
+    </p>
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Advert.Id)
+
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Advert.Title)
+        @Html.TextBoxFor(x => x.Advert.Title, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(x => x.Advert.Title)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Advert.Description)
+        @Html.TextBoxFor(x => x.Advert.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Advert.Description)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Advert.Picture)
+        @Html.TextBoxFor(x => x.Advert.Picture, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Advert.Picture)
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(x => x.Advert.Value)
+        @Html.TextBoxFor(x => x.Advert.Value,
+       new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Advert.Value)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Advert.Title)
+        @Html.DropDownListFor(x => x.Advert.CategoryId,
+        new SelectList(Model.Categories, "Id", "Name"),
+        "-- wybierz kategorię --",
+        new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Advert.Title)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Advert.StartDate)
+        @Html.TextBoxFor(x => x.Advert.StartDate,
+       "{0:dd-MM-yyyy}",
+        new
+        {
+            @class = "form-control",
+            @id = "Term",
+            autocomplete = "off"
+        })
+        @Html.ValidationMessageFor(x => x.Advert.StartDate)
+    </div>
+
+    @if (Model.Advert.Id > 0)
+    {
+        <div class="form-check mb-2">
+            @Html.CheckBoxFor(x => x.Advert.IsActive, new { @class = "form-check-input" })
+            @Html.LabelFor(x => x.Advert.IsActive)
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary btn-lg mt-2">Zapisz</button>
+
+}
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#Term').datepicker({
+                format: "dd-mm-yyyy",
+                language: "pl",
+                multidate: false,
+                autoclose: true,
+                todayHighlight: true,
+                forceParse: false
+            });
+
+            // format daty
+            $.validator.methods.date = function (value, element) {
+                alert('data conv');
+                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                var isFirefox = /Firefox/.test(navigator.userAgent);
+                if (isChrome || isFirefox) {
+                    var d = new Date();
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+                } else {
+                    return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+                }
+            }
+
+
+            // w formatowaniu ma być precinek, a nie kropka
+            $.validator.methods.number = function (value, element) {
+                return this.optional(element) || /^-?(?:\d+|\{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+            }
+        });
+
+
+    </script>
+}

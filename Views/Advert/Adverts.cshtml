@@ -1,4 +1,4 @@
-﻿@model MyAdvert.Core.ViewModels.AdvertViewModel
+﻿@model MyAdvert.Core.ViewModels.AdvertsViewModel
 
 @{
     ViewData["Title"] = "Adverts";
@@ -34,3 +34,101 @@
         </div>
     </div>
 </form>
+
+@* tabela z zadaniami *@
+<div>
+    @await Html.PartialAsync("_AdvertsTablePartial.cshtml", Model.Adverts)
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+    // funkcja zostanie wywołana gdy zostanie załadowany już cały widok
+    $(document).ready(function () {
+        // najpierw zaznaczamy formularz o id = filterForm
+        // chcemy aby po kliknięci przycisku zostałą wywołana taka funkcja
+        // a chcemy, żeby za pomocą ajax'a została wywołana odpowiednia funkcja z kontrolera
+        // przesyłamy zserializowane dane z tego formularza
+        // jeżeli zakończone sukcesem, to zostanie zwrócona tabelka z widoku częściowego
+
+        $('#filterForm').submit(function () {
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("Adverts","Advert")",
+                data: $(this).serialize(),
+                success: function (data) {
+                    $('#tasksTable').html(data);
+                },
+                error: function (data) {
+                    alert(data.message + ' filter ')
+                },
+                dataType: "html"
+            });
+
+            // return false konieczne aby nie wykonał się jeszcze raz submit
+            return false;
+        });
+    });
+    // koniec funkcji przy ładowaniu ekranu
+
+    // usuwanie zadania
+    function deleteAdvert(id, btn) {
+        if (!confirm("Czy na pewno chcesz usunąć ogłoszenie ?")) {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("DeleteAdvert","Advert")",
+            data: {
+                id: id
+            },
+                success: function (data) {
+                    if (data.success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else {
+                        alert(data.message + ' Delete 1 ');
+                    }
+
+                },
+                error: function (data) {
+                    alert(data.message + ' Delete 2 ');
+                },
+                dataType: "json"
+            });
+    }
+
+    // oznaczanie zadania jako zrealizowane
+    function finishTask(id, btn) {
+        if (!confirm("Czy na pewno chcesz oznaczyć zadanie jako zrealizowane ?")) {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("Finish","Advert")",
+            data: {
+                id: id
+            },
+                success: function (data) {
+                    if (data.success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else {
+                        alert(data.message + ' finish 1');
+                    }
+
+                },
+                error: function (data) {
+                    alert(data.message + ' finish 2');
+                },
+                dataType: "json"
+            });
+        }
+
+    // koniec funkcji
+    </script>
+}

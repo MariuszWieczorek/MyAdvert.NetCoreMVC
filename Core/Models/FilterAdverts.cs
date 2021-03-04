@@ -8,6 +8,10 @@ namespace MyAdvert.Core.Models
 {
     public class FilterAdverts
     {
+        public FilterAdverts()
+        {
+            IsActive = true;
+        }
         public string Title { get; set; }
         public int CategoryId { get; set; }
         [Display(Name = "Tylko aktywne")]

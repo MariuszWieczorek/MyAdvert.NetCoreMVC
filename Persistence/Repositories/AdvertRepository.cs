@@ -22,8 +22,11 @@ namespace MyAdvert.Persistence.Repositories
         public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks)
         {
             var adverts = _context.Adverts
-                .Include(x => x.Category)
-                .Where(x =>  x.IsActive == filterTasks.IsActive);
+                .Include(x => x.Category).AsQueryable();
+                //.Where(x => x.IsActive == filterTasks.IsActive);
+
+            if (filterTasks.IsActive == true)
+                adverts = adverts.Where(x => x.IsActive == filterTasks.IsActive);
 
             if (filterTasks.CategoryId != 0)
                 adverts = adverts.Where(x => x.CategoryId == filterTasks.CategoryId);
@@ -50,6 +53,8 @@ namespace MyAdvert.Persistence.Repositories
             var advertToUpdate = _context.Adverts.Single(x => x.Id == advert.Id && x.UserId == userId);
             advertToUpdate.Title = advert.Title;
             advertToUpdate.Description = advert.Description;
+            advertToUpdate.Picture = advert.Picture;
+            advertToUpdate.Value = advert.Value;
             advertToUpdate.StartDate = advert.StartDate;
             advertToUpdate.StopDate = advert.StopDate;
             advertToUpdate.IsActive = advert.IsActive;
