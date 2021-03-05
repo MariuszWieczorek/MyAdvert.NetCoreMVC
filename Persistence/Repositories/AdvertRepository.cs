@@ -3,6 +3,7 @@ using MyAdvert.Core;
 using MyAdvert.Core.Models;
 using MyAdvert.Core.Models.Domains;
 using MyAdvert.Core.Repositories;
+using MyAdvert.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,10 @@ namespace MyAdvert.Persistence.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks)
+        public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks, PagingInfo pagingInfo)
         {
             var adverts = _context.Adverts
                 .Include(x => x.Category).AsQueryable();
-                //.Where(x => x.IsActive == filterTasks.IsActive);
 
             if (filterTasks.IsActive == true)
                 adverts = adverts.Where(x => x.IsActive == filterTasks.IsActive);
@@ -34,8 +34,34 @@ namespace MyAdvert.Persistence.Repositories
             if (!string.IsNullOrWhiteSpace(filterTasks.Title))
                 adverts = adverts.Where(x => x.Title.Contains(filterTasks.Title));
 
+            if (pagingInfo != null)
+            {
+                adverts = adverts
+                    .Skip((pagingInfo.CurrentPage - 1) * pagingInfo.ItemsPerPage)
+                    .Take(pagingInfo.ItemsPerPage);
+            }
+
             return adverts.OrderBy(x => x.StartDate).ToList();
         }
+
+        public int GetNumberOfRecords(FilterAdverts filterTasks)
+        {
+            var adverts = _context.Adverts
+                .Include(x => x.Category).AsQueryable();
+
+            if (filterTasks.IsActive == true)
+                adverts = adverts.Where(x => x.IsActive == filterTasks.IsActive);
+
+            if (filterTasks.CategoryId != 0)
+                adverts = adverts.Where(x => x.CategoryId == filterTasks.CategoryId);
+
+            if (!string.IsNullOrWhiteSpace(filterTasks.Title))
+                adverts = adverts.Where(x => x.Title.Contains(filterTasks.Title));
+
+            
+            return adverts.Count();
+        }
+
 
         public Advert GetAdvert(int id)
         {

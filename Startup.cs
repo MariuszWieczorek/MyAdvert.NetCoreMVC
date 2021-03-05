@@ -77,9 +77,14 @@ namespace MyAdvert
 
             app.UseEndpoints(endpoints =>
             {
+
+               
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Advert}/{action=Adverts}/{id?}");
+                    pattern: "{controller=Advert}/{action=Adverts}/{id?}"
+                      );
+
+           
                 endpoints.MapRazorPages();
             });
         }

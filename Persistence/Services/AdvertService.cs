@@ -2,6 +2,7 @@
 using MyAdvert.Core.Models;
 using MyAdvert.Core.Models.Domains;
 using MyAdvert.Core.Services;
+using MyAdvert.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,15 @@ namespace MyAdvert.Persistence.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Advert> GetAdverts(FilterAdverts filterAdverts)
+        public IEnumerable<Advert> GetAdverts(FilterAdverts filterAdverts, PagingInfo pagingInfo)
         {
-            return _unitOfWork.Advert.GetAdverts(filterAdverts);
+            return _unitOfWork.Advert.GetAdverts(filterAdverts,pagingInfo);
         }
 
+        public int GetNumberOfRecords(FilterAdverts filterTasks)
+        {
+            return _unitOfWork.Advert.GetNumberOfRecords(filterTasks);
+        }
         public Advert GetAdvert(int id)
         {
             return _unitOfWork.Advert.GetAdvert(id);

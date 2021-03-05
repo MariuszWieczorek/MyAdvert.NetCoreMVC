@@ -40,6 +40,13 @@
     @await Html.PartialAsync("_AdvertsTablePartial.cshtml", Model.Adverts)
 </div>
 
+<div page-model="@Model.PagingInfo" page-action="Adverts" page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-secondary"
+     page-class-selected="btn-primary"
+     class="btn-group btn-group-sm m-1">
+</div>
+
 
 @section Scripts
 {
