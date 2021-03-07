@@ -21,6 +21,7 @@ namespace MyAdvert.Controllers
 
         private readonly IAdvertService _advertService;
         private readonly ICategoryService _categoryService;
+        private int _itemPerPage = 2;
 
         public AdvertController(IAdvertService advertService, ICategoryService categoryService)
         {
@@ -32,16 +33,17 @@ namespace MyAdvert.Controllers
         // akcja wyświetlająca w głównym oknie aplikacji listę ogłoszeń
         public IActionResult Adverts(int currentPage = 1)
         {
-            int itemPerPage = 2;
+            
             int numberOfRecords = _advertService.GetNumberOfRecords(new FilterAdverts());
-            var adverts = _advertService.GetAdverts(new FilterAdverts(), new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = itemPerPage });
+            var adverts = _advertService.GetAdverts(new FilterAdverts(),
+                new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = _itemPerPage });
 
             var vm = new AdvertsViewModel()
             {
                 FilterAdverts = new FilterAdverts(),
                 Categories = _categoryService.GetCategories(),
                 Adverts = adverts,
-                PagingInfo = new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = itemPerPage, TotalItems = numberOfRecords }
+                PagingInfo = new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = _itemPerPage, TotalItems = numberOfRecords }
             };
 
             return View(vm);
@@ -51,8 +53,18 @@ namespace MyAdvert.Controllers
         [HttpPost]
         public IActionResult Adverts(AdvertsViewModel viewModel)
         {
-            var tasks = _advertService.GetAdverts(viewModel.FilterAdverts, new PagingInfo() { CurrentPage = 1, ItemsPerPage = 10 });
-            return PartialView("_AdvertsTablePartial", tasks);
+            int numberOfRecords = _advertService.GetNumberOfRecords(viewModel.FilterAdverts);
+            var adverts = _advertService.GetAdverts(viewModel.FilterAdverts,viewModel.PagingInfo);
+
+            var vm = new AdvertsViewModel()
+            {
+                FilterAdverts = new FilterAdverts(),
+                Categories = _categoryService.GetCategories(),
+                Adverts = adverts,
+                PagingInfo = new PagingInfo() { CurrentPage = 1, ItemsPerPage = _itemPerPage, TotalItems = numberOfRecords }
+            };
+
+            return PartialView("_AdvertsTablePartial", vm);
         }
         #endregion
 

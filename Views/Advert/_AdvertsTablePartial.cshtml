@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyAdvert.Core.Models.Domains.Advert>
+﻿@model MyAdvert.Core.ViewModels.AdvertsViewModel
 
 <div id="tasksTable">
     <table class="table mt-3 table-bordered">
@@ -12,9 +12,9 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Any())
+            @if (Model.Adverts != null && Model.Adverts.Any())
             {
-                foreach (var advert in Model)
+                foreach (var advert in Model.Adverts)
                 {
                     <tr>
                         <td>
@@ -55,4 +55,11 @@
         </tbody>
 
     </table>
+
+    <div page-model="@Model.PagingInfo" page-action="Adverts" page-classes-enabled="true"
+         page-class="btn"
+         page-class-normal="btn-secondary"
+         page-class-selected="btn-primary"
+         class="btn-group btn-group-sm m-1">
+    </div>
 </div>

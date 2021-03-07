@@ -13,7 +13,6 @@ namespace MyAdvert.Core.Models.Domains
         [Required(ErrorMessage = "Pole tytuł jest wymagane.")]
         [Display(Name = "Tytuł")]
         public string Title { get; set; }
-        [MaxLength(250)]
         [Required(ErrorMessage = "Pole opis jest wymagane.")]
         [Display(Name = "Opis")]
         public string Description { get; set; }
