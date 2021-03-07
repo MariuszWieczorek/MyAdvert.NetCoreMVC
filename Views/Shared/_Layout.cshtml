@@ -46,6 +46,12 @@
         </nav>
     </header>
     <div class="container">
+
+        <div id="categories" class="col-3">
+            <!-- wywołuje Components\NavigationMenuViewComponent.cs -->
+            <!--@@await Component.InvokeAsync("NavigationMenu") -->
+        </div>
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
