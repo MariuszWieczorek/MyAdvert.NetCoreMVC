@@ -16,7 +16,7 @@ namespace MyAdvert.Components
             _categoryService = categoryService;
         }
 
-        // metoda Invoke jest wywoływana w chwili użycia komponentu przez silnik Razor
+        // metoda Invoke jest wywoływana w chwili użycia komponentu przez silnik Razor 
         public IViewComponentResult Invoke()
         {
             // klasa bazowa ViewComponent podobnie jak Controler przez zestaw właściwości zapewnia
