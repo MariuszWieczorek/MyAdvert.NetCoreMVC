@@ -61,7 +61,7 @@
         new
         {
             @class = "form-control",
-            @id = "Term",
+            @id = "StartDate",
             autocomplete = "off"
         })
         @Html.ValidationMessageFor(x => x.Advert.StartDate)
@@ -85,7 +85,7 @@
 
         $(document).ready(function () {
 
-            $('#Term').datepicker({
+            $('#StartDate').datepicker({
                 format: "dd-mm-yyyy",
                 language: "pl",
                 multidate: false,
