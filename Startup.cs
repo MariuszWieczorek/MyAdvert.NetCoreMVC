@@ -78,7 +78,25 @@ namespace MyAdvert
             app.UseEndpoints(endpoints =>
             {
 
-               
+
+
+
+                endpoints.MapControllerRoute(
+                    name: "pagination&category",
+                    pattern: "Produkty/{categoryId}/Strona{currentPage}",
+                    defaults: new { controller = "Advert", action = "Adverts" }
+                      );
+
+                // localhost:44387/?currentPage=2
+                // localhost:44387/Advert/Adverts?currentPage=2
+                // localhost:44387/Produkty/Strona2
+                endpoints.MapControllerRoute(
+                    name: "pagination",
+                    pattern: "Produkty/Strona{currentPage}",
+                    defaults: new { controller = "Advert", action = "Adverts"}
+                      );
+                
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Advert}/{action=Adverts}/{id?}"

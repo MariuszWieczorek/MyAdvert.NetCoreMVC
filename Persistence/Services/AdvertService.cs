@@ -18,15 +18,21 @@ namespace MyAdvert.Persistence.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Advert> GetAdverts(FilterAdverts filterAdverts, PagingInfo pagingInfo)
+        public IEnumerable<Advert> GetAdverts(FilterAdverts filterAdverts, PagingInfo pagingInfo, int categoryId)
         {
-            return _unitOfWork.Advert.GetAdverts(filterAdverts,pagingInfo);
+            return _unitOfWork.Advert.GetAdverts(filterAdverts, pagingInfo, categoryId);
         }
 
-        public int GetNumberOfRecords(FilterAdverts filterTasks)
+        public int GetNumberOfRecords(FilterAdverts filterTasks, int categoryId)
         {
-            return _unitOfWork.Advert.GetNumberOfRecords(filterTasks);
+            return _unitOfWork.Advert.GetNumberOfRecords(filterTasks, categoryId);
         }
+
+        public IEnumerable<Category> GetUsedCategories()
+        {
+            return _unitOfWork.Advert.GetUsedCategories();
+        }
+
         public Advert GetAdvert(int id)
         {
             return _unitOfWork.Advert.GetAdvert(id);

@@ -31,12 +31,13 @@ namespace MyAdvert.Controllers
 
         #region Adverts
         // akcja wyświetlająca w głównym oknie aplikacji listę ogłoszeń
-        public IActionResult Adverts(int currentPage = 1)
+        public IActionResult Adverts(int currentPage = 1, int categoryId = 0)
         {
             
-            int numberOfRecords = _advertService.GetNumberOfRecords(new FilterAdverts());
+            int numberOfRecords = _advertService.GetNumberOfRecords(new FilterAdverts(),categoryId);
             var adverts = _advertService.GetAdverts(new FilterAdverts(),
-                new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = _itemPerPage });
+                new PagingInfo() { CurrentPage = currentPage, ItemsPerPage = _itemPerPage },
+                categoryId);
 
             var vm = new AdvertsViewModel()
             {
@@ -53,8 +54,8 @@ namespace MyAdvert.Controllers
         [HttpPost]
         public IActionResult Adverts(AdvertsViewModel viewModel)
         {
-            int numberOfRecords = _advertService.GetNumberOfRecords(viewModel.FilterAdverts);
-            var adverts = _advertService.GetAdverts(viewModel.FilterAdverts,viewModel.PagingInfo);
+            int numberOfRecords = _advertService.GetNumberOfRecords(viewModel.FilterAdverts,0);
+            var adverts = _advertService.GetAdverts(viewModel.FilterAdverts,viewModel.PagingInfo,0);
 
             var vm = new AdvertsViewModel()
             {
@@ -64,7 +65,7 @@ namespace MyAdvert.Controllers
                 PagingInfo = new PagingInfo() { CurrentPage = 1, ItemsPerPage = _itemPerPage, TotalItems = numberOfRecords }
             };
 
-            return PartialView("_AdvertsTablePartial", vm);
+            return PartialView("_AdvertsSummaryPartial", vm);
         }
         #endregion
 

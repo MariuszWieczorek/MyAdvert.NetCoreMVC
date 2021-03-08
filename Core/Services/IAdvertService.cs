@@ -10,9 +10,10 @@ namespace MyAdvert.Core.Services
 {
     public interface IAdvertService
     {
-        IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks, PagingInfo pagingInfo);
+        IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks, PagingInfo pagingInfo, int categoryId);
         Advert GetAdvert(int id);
-        int GetNumberOfRecords(FilterAdverts filterTasks);
+        int GetNumberOfRecords(FilterAdverts filterTasks, int categoryId);
+        IEnumerable<Category> GetUsedCategories();
         void AddAdvert(Advert advert);
         void UpdateAdvert(Advert advert, string userId);
         void DeleteAdvert(int id, string userId);

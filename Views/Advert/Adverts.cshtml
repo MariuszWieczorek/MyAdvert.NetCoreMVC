@@ -36,10 +36,17 @@
 </form>
 
 @* tabela z zadaniami *@
-<div>
-    @await Html.PartialAsync("_AdvertsTablePartial.cshtml", Model)
-</div>
 
+<div class="row m-1 p-1 ">
+    <div id="categories" class="col-3">
+        <!-- wywołuje Components\NavigationMenuViewComponent.cs -->
+        @await Component.InvokeAsync("NavigationMenu")
+    </div>
+    <div class="col-9">
+        @await Html.PartialAsync("_AdvertsSummaryPartial.cshtml", Model)
+    </div>
+</div>
+ 
 
 
 
@@ -90,6 +97,7 @@
                     if (data.success) {
                         var row = btn.parentNode.parentNode;
                         row.parentNode.removeChild(row);
+
                     }
                     else {
                         alert(data.message + ' Delete 1 ');
@@ -103,6 +111,34 @@
             });
     }
 
+    // usuwanie zadania
+    function deleteAdvert2(id, btn) {
+        if (!confirm("Czy na pewno chcesz usunąć ogłoszenie ?")) {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("DeleteAdvert","Advert")",
+            data: {
+                id: id
+            },
+                success: function (data) {
+                    if (data.success) {
+                        var el = document.getElementById(id);
+                        el.remove();
+
+                    }
+                    else {
+                        alert(data.message + ' Delete 1 ');
+                    }
+
+                },
+                error: function (data) {
+                    alert(data.message + ' Delete 2 ');
+                },
+                dataType: "json"
+            });
+    }
     // oznaczanie zadania jako zrealizowane
     function finishTask(id, btn) {
         if (!confirm("Czy na pewno chcesz oznaczyć zadanie jako zrealizowane ?")) {

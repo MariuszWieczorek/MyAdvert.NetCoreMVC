@@ -1,0 +1,52 @@
+﻿@model MyAdvert.Core.ViewModels.AdvertsViewModel
+
+<div id="tasksTable">
+
+    @if (Model.Adverts != null && Model.Adverts.Any())
+    {
+        foreach (var advert in Model.Adverts)
+        {
+
+        <div class="card m-1 p-1" id="@advert.Id">
+            <div class="bg-light p-1">
+                <h4>
+                    
+                    <a href="@Url.Action("Advert","Advert",
+                                        new { id = advert.Id })"
+                       class="font-weight-bold">@advert.Title</a>
+
+                    <span class="badge badge-pill badge-primary" style="float:right">
+                        <small>@advert.Value.ToString("c")</small>
+                    </span>
+                </h4>
+            </div>
+            
+            
+            <div class="card-text row p-1 col-11">
+                <div class="col-10">
+                    @advert.Description
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-danger btn-sm "
+                            onclick="deleteAdvert2('@advert.Id',this)">
+                        Usuń
+                    </button>
+                </div>
+            </div>
+
+                
+            
+        </div>
+          
+        }
+
+    }
+
+
+    <div page-model="@Model.PagingInfo" page-action="Adverts" page-classes-enabled="true"
+         page-class="btn"
+         page-class-normal="btn-secondary"
+         page-class-selected="btn-primary"
+         class="btn-group btn-group-sm m-1">
+    </div>
+</div>

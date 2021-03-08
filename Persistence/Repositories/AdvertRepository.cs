@@ -20,7 +20,7 @@ namespace MyAdvert.Persistence.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks, PagingInfo pagingInfo)
+        public IEnumerable<Advert> GetAdverts(FilterAdverts filterTasks, PagingInfo pagingInfo, int categoryId)
         {
             var adverts = _context.Adverts
                 .Include(x => x.Category).AsQueryable();
@@ -30,6 +30,9 @@ namespace MyAdvert.Persistence.Repositories
 
             if (filterTasks.CategoryId != 0)
                 adverts = adverts.Where(x => x.CategoryId == filterTasks.CategoryId);
+
+            if (categoryId != 0)
+                adverts = adverts.Where(x => x.CategoryId == categoryId);
 
             if (!string.IsNullOrWhiteSpace(filterTasks.Title))
                 adverts = adverts.Where(x => x.Title.Contains(filterTasks.Title));
@@ -44,7 +47,18 @@ namespace MyAdvert.Persistence.Repositories
             return adverts.OrderBy(x => x.StartDate).ToList();
         }
 
-        public int GetNumberOfRecords(FilterAdverts filterTasks)
+        public IEnumerable<Category> GetUsedCategories()
+        {
+            var categories = _context.Adverts
+                .Include(x => x.Category)
+                .Select(x => x.Category)
+                .Distinct()
+                .OrderBy(x => x);
+
+            return categories;
+        }
+
+        public int GetNumberOfRecords(FilterAdverts filterTasks, int categoryId)
         {
             var adverts = _context.Adverts
                 .Include(x => x.Category).AsQueryable();
@@ -54,6 +68,9 @@ namespace MyAdvert.Persistence.Repositories
 
             if (filterTasks.CategoryId != 0)
                 adverts = adverts.Where(x => x.CategoryId == filterTasks.CategoryId);
+
+            if (categoryId != 0)
+                adverts = adverts.Where(x => x.CategoryId == categoryId);
 
             if (!string.IsNullOrWhiteSpace(filterTasks.Title))
                 adverts = adverts.Where(x => x.Title.Contains(filterTasks.Title));

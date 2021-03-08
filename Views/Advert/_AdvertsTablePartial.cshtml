@@ -26,14 +26,7 @@
                         <td>@advert.Category.Name</td>
                         <td>@advert.StartDate?.ToString("dd-MM-yyyy")</td>
                         <td>
-                            @if (!advert.IsActive)
-                            {
-                                <button class="btn btn-success btn-sm mr-2"
-                                        onclick="finishAdvert('@advert.Id',this)">
-                                    Ukryj
-                                </button>
-                            }
-                            <button class="btn btn-danger btn-sm"
+                              <button class="btn btn-danger btn-sm"
                                     onclick="deleteAdvert('@advert.Id',this)">
                                 Usuń
                             </button>

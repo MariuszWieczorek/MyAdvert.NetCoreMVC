@@ -1,19 +1,25 @@
-﻿@model IEnumerable<string>
+﻿@model MyAdvert.Core.ViewModels.NavigationMenuViewModel
 
-<a class="btn btn-block @(ViewBag.SelectedCategory==null ? "btn-primary" : "btn-secondary")"
-   asp-action="Advert"
-   asp-controller="Adverts"
-   asp-route-category="">
-    strona główna
+<a class="btn btn-block @(Model.CurrentCategoryId == 0 ? "btn-primary" : "btn-secondary")"
+   asp-action="Adverts"
+   asp-controller="Advert"
+   asp-route-categoryId="0">
+    wszystkie kategorie
 </a>
 
-@foreach (string category in Model)
+@if(ViewBag.SelectedCategory == null)
 {
-    <a class="btn btn-block @(category == ViewBag.SelectedCategory ? "btn-primary" : "btn-secondary")"
-       asp-action="Advert"
-       asp-controller="Adverts"
-       asp-route-category="@category"
+    ViewBag.SelectedCategory = 0;
+}
+
+@foreach (var category in Model.Categories)
+{
+    <a class="btn btn-block @(category.Id == Model.CurrentCategoryId ? "btn-primary" : "btn-secondary")"
+       asp-action="Adverts"
+       asp-controller="Advert"
+       asp-route-categoryId="@category.Id"
        asp-route-currentPage="1">
-        @category
+        @category.Name
     </a>
 }
+
