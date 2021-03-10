@@ -226,5 +226,14 @@ namespace MyAdvert.Controllers
         }
         #endregion
 
+        #region popups
+        [HttpPost]
+        public ActionResult Popup(Advert model)
+        {
+            ViewBag.Message = model.Title;
+            return View("About");
+        }
+        #endregion
+
     }
 }
