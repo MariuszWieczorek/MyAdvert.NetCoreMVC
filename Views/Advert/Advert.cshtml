@@ -11,6 +11,11 @@
     pokaż okienko modalne
 </button>
 
+<button class="btn btn-primary mb-3 mt-3"
+        onclick="showModalForm2()">
+    kategorie
+</button>
+
 @using (Html.BeginForm("Advert", "Advert"))
 {
     <p class="alert alert-info mt-4 mb-4">
@@ -39,7 +44,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.Advert.Picture)
-        @Html.TextBoxFor(x => x.Advert.Picture, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.Advert.Picture, new { @class = "form-control", id="pix" })
         @Html.ValidationMessageFor(x => x.Advert.Picture)
     </div>
 
@@ -85,6 +90,7 @@
 
 <!-- Obsługa okna modalnego -->
 @await Html.PartialAsync("_Popup", Model.Advert)
+@await Html.PartialAsync("_CategoryPopup", Model.Categories)
 
 @section Scripts
 {
@@ -128,7 +134,7 @@
         // });
 
         function showModalForm() {
-            $('.modal').modal('show');
+            $('#exampleModal1').modal('show');
         }
 
         function saveModalForm() {
@@ -136,8 +142,36 @@
         }
 
         function hideModalForm() {
-            $('.modal').modal('hide');
+            $('#exampleModal1').modal('hide');
         }
+
+
+
+        function showModalForm2() {
+            $('#exampleModal2').modal('show');
+        }
+
+        function saveModalForm2() {
+            document.getElementById('buttonSubmit2').click();
+        }
+
+        function hideModalForm2() {
+            $('#exampleModal2').modal('hide');
+        }
+
+        // wybór kategorii
+        function pickCategory(id, name, btn) {
+            /*
+            if (!confirm("Czy na pewno wybrać kategorię ?" + id)) {
+                $('#exampleModal2').modal('hide');
+                return;
+            }*/
+                
+            // tu możemy wywołać ajax'a
+            $('#pix').val(name);
+            $('#pix').focus();
+            $('#exampleModal2').modal('hide');
+         };
 
     </script>
 }

@@ -1,7 +1,7 @@
 ﻿@model MyAdvert.Core.Models.Domains.Advert
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -16,7 +16,9 @@
                         @Html.ValidationMessageFor(m => m.Title)<br />
                         @Html.TextBoxFor(m => m.Title, new { @class = "form-control mb-2 login-form-skarby", placeholder = "Tytuł" })
                     </div>
-                    <button type="submit" id="buttonSubmit" style="display: none;"></button>}
+                    <button type="submit" id="buttonSubmit" style="display: none;"></button>
+                 }
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hideModalForm()">Close</button>
