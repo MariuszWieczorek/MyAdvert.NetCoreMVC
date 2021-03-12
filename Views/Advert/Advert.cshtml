@@ -44,7 +44,7 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.Advert.Picture)
-        @Html.TextBoxFor(x => x.Advert.Picture, new { @class = "form-control", id="pix" })
+        @Html.TextBoxFor(x => x.Advert.Picture, new { @class = "form-control", id = "pix" })
         @Html.ValidationMessageFor(x => x.Advert.Picture)
     </div>
 
@@ -87,6 +87,21 @@
     <button type="submit" class="btn btn-primary btn-lg mt-2">Zapisz</button>
 
 }
+
+
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="Advert.Picture"></label>
+        </dt>
+        <dd>
+            <input asp-for="Advert.Picture" type="file">
+            <span asp-validation-for="Advert.Picture"></span>
+        </dd>
+    </dl>
+    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
+</form>
+
 
 <!-- Obsługa okna modalnego -->
 @await Html.PartialAsync("_Popup", Model.Advert)
@@ -167,12 +182,12 @@
                 $('#exampleModal2').modal('hide');
                 return;
             }*/
-                
+
             // tu możemy wywołać ajax'a
             $('#pix').val(name);
             $('#pix').focus();
             $('#exampleModal2').modal('hide');
-         };
+        };
 
     </script>
 }
