@@ -122,6 +122,8 @@
                 forceParse: false
             });
 
+            alert('document ready 1');
+
             // format daty
             $.validator.methods.date = function (value, element) {
                 alert('data conv');
@@ -135,11 +137,14 @@
                 }
             }
 
+            alert('document ready 2');
 
             // w formatowaniu ma być precinek, a nie kropka
             $.validator.methods.number = function (value, element) {
                 return this.optional(element) || /^-?(?:\d+|\{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
             }
+
+            alert('document ready 3');
         });
 
 
